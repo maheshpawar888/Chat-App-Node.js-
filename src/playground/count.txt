@@ -1,0 +1,31 @@
+var count = 0;
+
+io.on("connection", (socket) =>{
+    console.log("New WebSocket connection..!!")
+
+    // Here we are sending data from server to client with count using emit
+    socket.emit('countUpdated',count)
+
+    // Here we are receving event from client using on
+    socket.on('increment',() =>{
+        count++;
+        // socket.emit('countUpdated',count);  This line sends count to only client 
+        // that are updating it
+        io.emit('countUpdated',count); // This line sends count to every client 
+        // that are connected to the server 
+
+    })
+
+**************************************************************************************
+chat.js client side code
+
+const socket =  io(); // This will create a connection from client to server
+
+// here we are accepting the server info using on
+socket.on('countUpdated',(count) =>{
+    console.log(count)
+})
+
+document.querySelector("#increment").addEventListener('click',() =>{
+    socket.emit('increment');
+})

@@ -1,0 +1,11 @@
+
+socket.broadcast.emit('msg','A new user has joined!')
+--> the above line is used when a new user joined then all the 
+    user that are connected will get a messege "A new user has joined!"
+    except the user that is joined.
+
+socket.on('disconnect',() =>{
+        io.emit('msg','A user has left!')
+    })
+--> Whenever a user is left then all the connected user will get above
+    messege 'A user has left!'
